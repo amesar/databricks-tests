@@ -1,0 +1,55 @@
+{
+  "job_id": 35950,
+  "run_id": 2404336,
+  "number_in_job": 1,
+  "state": {
+    "life_cycle_state": "PENDING",
+    "state_message": "Waiting for cluster"
+  },
+  "task": {
+    "spark_python_task": {
+      "python_file": "dbfs:/jobs/myapp/run_tests.py",
+      "parameters": [
+        "--pyargs",
+        "tests",
+        "-s",
+        "-v",
+        "--junit-xml",
+        "/dbfs/jobs/myapp/databricks-tests/junit.xml"
+      ]
+    }
+  },
+  "cluster_spec": {
+    "new_cluster": {
+      "spark_version": "6.6.x-scala2.11",
+      "aws_attributes": {
+        "zone_id": "us-west-2c",
+        "availability": "SPOT_WITH_FALLBACK"
+      },
+      "node_type_id": "i3.xlarge",
+      "enable_elastic_disk": false,
+      "num_workers": 1
+    },
+    "libraries": [
+      {
+        "pypi": {
+          "package": "pytest"
+        }
+      },
+      {
+        "whl": "dbfs:/jobs/myapp/databricks_tests_example-0.0.1-py3-none-any.whl"
+      }
+    ]
+  },
+  "cluster_instance": {
+    "cluster_id": "0716-190309-boll22"
+  },
+  "start_time": 1594926188602,
+  "setup_duration": 0,
+  "execution_duration": 0,
+  "cleanup_duration": 0,
+  "creator_user_name": "juan@acme.com",
+  "run_name": "DatabricksTests_NewCluster",
+  "run_page_url": "https://demo.cloud.databricks.com#job/35950/run/1",
+  "run_type": "SUBMIT_RUN"
+}

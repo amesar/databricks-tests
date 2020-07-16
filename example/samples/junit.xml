@@ -1,0 +1,24 @@
+<?xml version="1.0" ?>
+<testsuites>
+  <testsuite 
+     errors="0" 
+     failures="0" 
+     hostname="0716-190309-boll22-10-0-249-156" 
+     name="pytest" 
+     skipped="0" 
+     tests="2" 
+     time="8.975" 
+     timestamp="2020-07-16T19:06:17.155587">
+     <testcase classname="test_simple.TestSimple" 
+       file="../python3/lib/python3.7/site-packages/tests/test_simple.py" 
+       line="3" 
+       name="test_simple" 
+       time="0.001"/>
+     <testcase classname="test_spark.TestSpark" 
+       file="../python3/lib/python3.7/site-packages/tests/test_spark.py" 
+       line="6" 
+       name="test_multiply" 
+       time="8.829"/>
+  </testsuite>
+</testsuites>
+
