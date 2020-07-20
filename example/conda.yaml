@@ -1,0 +1,7 @@
+name: databricks-tests-example
+channels:
+- defaults
+dependencies:
+- python=3.7.6
+- pip:
+    - databricks-cli
