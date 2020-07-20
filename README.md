@@ -1,13 +1,37 @@
 # databricks-tests
 
-Example of integration tests running as a wheel-based Databricks run.
+## Overview
 
-## Run tests against Databricks
+* Example of wheel-based integration tests running as a Databricks job.
+* This example outlines the steps that you need to integrate into your CI/CD test build.
 
-See [example/setup.py](example/setup.py).
+## Run tests
 
 ```
 cd example
+```
+
+**Setup**
+
+Create a virtual environment and install `databricks-cli` PyPI package.
+See [conda.yaml](example/conda.yaml).
+
+```
+conda env create conda.yaml
+source activate databricks-tests-example
+```
+
+**Configure JSON run spec file**
+
+Copy [run_submit.json.template](example/run_submit.json.template) and change `{BASE_DIR}` to point to your DBFS location.
+
+```
+sed -e "s;{BASE_DIR};dbfs:/jobs/myapp;" < run_submit.json.template > run_submit.json
+```
+
+**Copy test harness main program to DBFS**
+```
+databricks fs cp ../run_test.py dbfs:/jobs/myapp
 ```
 
 **Build the wheel**
@@ -20,14 +44,7 @@ python setup.py bdist_wheel
 databricks fs cp dist/databricks_tests_example-0.0.1-py3-none-any.whl dbfs:/jobs/myapp
 ```
 
-**Copy test runner main program to DBFS**
-```
-databricks fs cp ../run_test.py dbfs:/jobs/myapp
-```
-
 **Launch run to execute tests on Databricks cluster**
-
-In [run_submit.json.template](example/run_submit.json.template) change `{BASE_DIR}` to point to your DBFS location.
 
 ```
 databricks runs submit --json-file run_submit.json
@@ -68,8 +85,11 @@ databricks runs get --run-id 2404336
 ```
 
 **Check the output logs**
+
+Open up the `run_page_url` in your browser to view the logs in the Spark UI.
+
 ```
-  "run_page_url": "https://demo.cloud.databricks.com#job/35938/run/1",
+  "run_page_url": "https://demo.cloud.databricks.com#job/35950/run/1",
 ```
 
 **Download the test results**
