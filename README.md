@@ -7,18 +7,20 @@
 
 ## Run tests
 
-```
-cd example
-```
-
 **Setup**
 
 Create a virtual environment and install `databricks-cli` PyPI package.
-See [conda.yaml](example/conda.yaml).
+See [conda.yaml](conda.yaml).
 
 ```
 conda env create conda.yaml
-source activate databricks-tests-example
+source activate databricks-tests
+```
+
+**Go to example folder**
+
+```
+cd example
 ```
 
 **Configure JSON run spec file**
@@ -30,8 +32,10 @@ sed -e "s;{BASE_DIR};dbfs:/jobs/myapp;" < run_submit.json.template > run_submit.
 ```
 
 **Copy test harness main program to DBFS**
+
+See [run_tests.py](test-harness/databricks_test_server/run_tests.py).
 ```
-databricks fs cp ../run_test.py dbfs:/jobs/myapp
+databricks fs cp ../test-harness/databricks_test_server/run_tests.py dbfs:/jobs/myapp
 ```
 
 **Build the wheel**

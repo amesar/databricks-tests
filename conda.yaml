@@ -1,4 +1,4 @@
-name: databricks-tests-example
+name: databricks-tests
 channels:
 - defaults
 dependencies:
