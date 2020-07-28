@@ -2,12 +2,34 @@
 
 ## Overview
 
-* Example of wheel-based integration tests running as a Databricks job.
-* This example outlines the steps that you need to integrate into your CI/CD test build.
+### Synopsis
+  * Example of wheel-based integration tests running on Databricks.
+  * This example demonstrated the steps that you need to integrate into your CI/CD test build.
 
-There are two ways to run tests are demonstrated here:
-* Manual - execute steps such as pushing files to DBFS, launching job and polling job in a manual fashion.
-* Automated - Opinionated Python scripts to automate above steps with simple worfklow.
+### Steps to run a test on Databricks
+
+**Setup**
+* Create [conda](conda.yaml) environment
+* Create [json spec file](example/run_submit.json.template) for the run
+  * Uses [runs submit](https://docs.databricks.com/dev-tools/api/latest/jobs.html#runs-submit) API endpoint
+  * Uses [SparkPythonTask](https://docs.databricks.com/dev-tools/api/latest/jobs.html#jobssparkpythontask)
+* Copy the [run_tests.py](test-harness/databricks_test_harness/run_tests.py) to DBFS to serve as your main program for SparkPythonTask
+
+**Run tests**
+* Sample package with tests and business logic: [example](example) 
+  * Business logic: [myapp](example/myapp)
+  * Tests: [tests](example/tests)
+  * [setup.py](example/setup.py)
+* Build the wheel with your business logic and tests
+* Copy the wheel to DBFS
+* Launch test run
+* Poll the run until it is in TERMINATED or INTERNAL ERROR 
+* Download test results file [junit.xml](example/samples/junit.xml)
+* Display URI to driver logs
+
+### There are two ways to run tests
+* Manual - execute above steps manually
+* Automated - Python workflow scripts to automate above steps 
 
 ## Setup
 
@@ -48,7 +70,7 @@ See [run_tests.py](test-harness/databricks_test_harness/run_tests.py).
 databricks fs cp ../test-harness/databricks_test_harness/run_tests.py dbfs:/jobs/myapp --overwrite
 ```
 
-**Build the wheel**
+**Build the wheel with tests**
 ```
 python setup.py bdist_wheel
 ```
@@ -69,7 +91,9 @@ databricks runs submit --json-file run_submit.json
 }
 ```
 
-**Poll the [run](https://docs.databricks.com/dev-tools/api/latest/jobs.html#runs-get) until it is in TERMINATED state**
+**Poll the [run](https://docs.databricks.com/dev-tools/api/latest/jobs.html#runs-get) until it is done**
+
+Execute the following command repeatedly until the run is in a TERMINATED or INTERNAL ERROR state
 ```
 databricks runs get --run-id 2404336
 ```
@@ -144,7 +168,7 @@ databricks fs cp dbfs:/jobs/myapp/junit.xml .
 cd example
 ```
 
-### Install
+### Install the test harness package
 ```
 pip install -e ../test-harness
 ```
