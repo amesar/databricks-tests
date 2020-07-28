@@ -1,6 +1,6 @@
 import json, time
 import click
-from databricks_test_client.api_client import ApiClient
+from databricks_test_harness.api_client import ApiClient
 
 @click.command()
 @click.option("--json_spec_file", help="json spec file", required=True, type=str)

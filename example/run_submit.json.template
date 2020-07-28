@@ -8,10 +8,10 @@
   "timeout_seconds": 3600,
   "libraries": [
     { "pypi": { "package": "pytest==5.3.5" } },
-    { "whl": "{BASE_DIR}/databricks_tests_example-0.0.1-py3-none-any.whl" }
+    { "whl": "{DBFS_DIR}/databricks_tests_example-0.0.1-py3-none-any.whl" }
   ],
   "spark_python_task": {
-    "python_file": "{BASE_DIR}/run_tests.py", 
-    "parameters": [ "--pyargs", "tests", "-s", "-v", "--junit-xml", "{BASE_DIR}/junit.xml" ]
+    "python_file": "{DBFS_DIR}/run_tests.py", 
+    "parameters": [ "--pyargs", "tests", "-s", "-v", "--junit-xml", "{DBFS_DIR}/junit.xml" ]
   }
 }

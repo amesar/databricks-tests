@@ -1,7 +1,7 @@
 from databricks_cli.dbfs.api import DbfsApi, DbfsPath
 from databricks_cli.runs.api import RunsApi
 from databricks_cli.sdk import api_client
-from databricks_test_client import cred_utils
+from databricks_test_harness import cred_utils
 
 def get_api_client(profile=None):
     (host,token) = cred_utils.get_credentials(profile)

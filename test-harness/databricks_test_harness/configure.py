@@ -2,7 +2,7 @@ import os
 import importlib.resources as pkg_resources
 import tempfile
 import click
-from databricks_test_client.api_client import ApiClient
+from databricks_test_harness.api_client import ApiClient
 
 _driver = "run_tests.py"
 
