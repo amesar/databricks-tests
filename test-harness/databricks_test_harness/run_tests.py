@@ -9,4 +9,4 @@ if __name__ == "__main__":
     print("run_tests: errcode:",errcode)
     if errcode != 0:
         sys.exit(errcode)
-    #sys.exit(0) # causes failure
+    #sys.exit(0) # causes run failure!

@@ -3,31 +3,33 @@
 ## Overview
 
 ### Synopsis
-  * Example of wheel-based integration tests running on Databricks.
-  * This example demonstrated the steps that you need to integrate into your CI/CD test build.
+  * Example of running pytest integration tests on Databricks with wheel using `run submit` API endpoint.
+  * Demonstrates the steps that you need to integrate into your CI/CD test build.
 
-### Steps to run a test on Databricks
+### Steps to run tests on Databricks
 
 **Setup**
 * Create [conda](conda.yaml) environment
-* Create [json spec file](example/run_submit.json.template) for the run
+* Create [JSON spec file](example/run_submit.json.template) for the test run
   * Uses [runs submit](https://docs.databricks.com/dev-tools/api/latest/jobs.html#runs-submit) API endpoint
   * Uses [SparkPythonTask](https://docs.databricks.com/dev-tools/api/latest/jobs.html#jobssparkpythontask)
 * Copy the [run_tests.py](test-harness/databricks_test_harness/run_tests.py) to DBFS to serve as your main program for SparkPythonTask
 
-**Run tests**
-* Sample package with tests and business logic: [example](example) 
-  * Business logic: [myapp](example/myapp)
-  * Tests: [tests](example/tests)
+**Sample test project**
+* [example](example) project with business logic and tests 
+  * [myapp](example/myapp) - business logic package
+  * [tests](example/tests) package
   * [setup.py](example/setup.py)
-* Build the wheel with your business logic and tests
-* Copy the wheel to DBFS
-* Launch test run
-* Poll the run until it is in TERMINATED or INTERNAL ERROR 
-* Download test results file [junit.xml](example/samples/junit.xml)
-* Display URI to driver logs
 
-### There are two ways to run tests
+**Steps to run tests**
+  * Build the wheel with your business logic and tests
+  * Copy the wheel to DBFS
+  * Launch test run with `run submit` using the JSON spec file
+  * Poll the run until it is in TERMINATED or INTERNAL ERROR state
+  * Download test results file [junit.xml](example/samples/junit.xml)
+  * Display URI to driver logs
+
+### Two ways to run tests
 * Manual - execute above steps manually
 * Automated - Python workflow scripts to automate above steps 
 
@@ -35,7 +37,7 @@
 
 **Databricks Workspace and Authentication**
 
-Specifying your workspace and credentials is based on the Databricks CLI.
+Specifying your workspace URI and credentials is based on the Databricks CLI.
 See [Set up authentication](https://docs.databricks.com/dev-tools/cli/index.html#set-up-authentication) in Databricks documentation.
 
 **Conda environment**
